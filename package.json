@@ -1,14 +1,13 @@
 {
-  "name": "alexa-deepseek-skill",
+  "name": "alexa-deepseek-assistant",
   "version": "1.0.0",
-  "description": "Skill Alexa per DeepSeek con Render",
+  "description": "Skill Alexa per DeepSeek",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.0",
-    "axios": "^1.0.0"
+    "express": "^4.18.0"
   },
   "engines": {
     "node": "18.x"
