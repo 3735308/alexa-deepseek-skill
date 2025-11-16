@@ -3,68 +3,28 @@ const app = express();
 
 app.use(express.json());
 
-// Endpoint principale per Alexa
-app.post('/alexa', (req, res) => {
-  console.log('Richiesta ricevuta da Alexa:', JSON.stringify(req.body, null, 2));
+// ⚠️ QUESTA PARTE È ESSENZIALE ⚠️
+app.post('/alexa', (req, res) => {  // <- DEVE ESSERE .post() NON .get()
+  console.log('✅ Richiesta Alexa ricevuta!');
   
-  const { request } = req.body;
-  
-  // Gestione Launch Request
-  if (request.type === 'LaunchRequest') {
-    return res.json({
-      version: "1.0",
-      response: {
-        outputSpeech: {
-          type: "PlainText",
-          text: "Ciao! Sono il tuo assistente DeepSeek su Render. Cosa vuoi sapere oggi?"
-        },
-        shouldEndSession: false
-      }
-    });
-  }
-  
-  // Gestione Intent Request
-  if (request.type === 'IntentRequest') {
-    const intentName = request.intent.name;
-    
-    if (intentName === 'ChatIntent') {
-      const userMessage = request.intent.slots.Message?.value || 'Ciao';
-      
-      // RISPOSTA PROVVISORIA - POI AGGIUNGEREMO DEEPSEEK
-      const responseText = `Su Render funziona! Hai detto: "${userMessage}". Prossimo passo: integrare DeepSeek API!`;
-      
-      return res.json({
-        version: "1.0",
-        response: {
-          outputSpeech: {
-            type: "PlainText",
-            text: responseText
-          },
-          shouldEndSession: false
-        }
-      });
-    }
-  }
-  
-  // Risposta di default
   res.json({
     version: "1.0",
     response: {
       outputSpeech: {
         type: "PlainText",
-        text: "Scusa, non ho capito. Puoi ripetere per favore?"
+        text: "Perfetto! Alexa è connessa al server. Funziona!"
       },
       shouldEndSession: false
     }
   });
 });
 
-// Health check per Render
+// Health check (GET)
 app.get('/', (req, res) => {
-  res.send('Alexa DeepSeek Skill is running on Render!');
+  res.json({ status: 'online', message: 'Server Alexa pronto!' });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server Alexa running on port ${PORT}`);
+  console.log(`🚀 Server avviato sulla porta ${PORT}`);
 });
